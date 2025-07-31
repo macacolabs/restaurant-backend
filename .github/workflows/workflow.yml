@@ -47,7 +47,7 @@ jobs:
                  "Update": "true"
                 },
                 "Ports": [
-                  { "ContainerPort": 8001 }
+                  { "ContainerPort": 8080 }
                 ]
              }' > Dockerrun.aws.json
       - name: Zip for deployment
