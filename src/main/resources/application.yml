@@ -2,10 +2,20 @@ spring:
   application:
     name: springboot-restapi
   datasource:
-    url: jdbc:mysql://mysql:3306/springreact
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sql.macacolabs.site:3300/springreact
     username: ohgiraffers
     password: ohgiraffers
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  # jpa config
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 server:
   port: 8080
   servlet:
@@ -16,15 +26,6 @@ server:
   web:
     resources:
       static-locations: classpath:/productimgs/
-
-  # jpa config
-  jpa:
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
 
 # Logging Level
 logging:
@@ -38,7 +39,7 @@ image:
   add-resource-handler: /productimgs/**
 
   image-dir: src/main/resources/static/productimgs
-  image-url: http://localhost:8080/productimgs/
+  image-url: ${IMAGE_BASE_URL:http://localhost:8080}/productimgs/
 jwt:
   key: wERjtIdxQ8lNjF0w/AAiN6HqTASaCAUzSq6nbKefMwf5CbPE8GvwLsClz94uVt9Q1esxYwwXVU+BYn7/mR01Qg==
   time: 1800000
