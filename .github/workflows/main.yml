@@ -17,7 +17,9 @@ jobs:
           java-version: '17'
 
       - name: Restore application-dev.yml
-        run: echo "${{ secrets.APPLICATION_DEV_YML }}"  | base64 -d > src/main/resources/application.yml
+        run: echo "$APPLICATION_DEV_YML" | base64 -d > src/main/resources/application.yml
+        env:
+          APPLICATION_DEV_YML: ${{ secrets.APPLICATION_DEV_YML }}
  
 
       - name: Build with Gradle
