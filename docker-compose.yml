@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: springreact
+      MYSQL_USER: ohgiraffers
+      MYSQL_PASSWORD: ohgiraffers
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d
+
+  springboot:
+    build:
+      context: ./springboot
+      dockerfile: Dockerfile
+    container_name: springboot-app
+    ports:
+      - "8001:8001"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/springreact
+      SPRING_DATASOURCE_USERNAME: ohgiraffers
+      SPRING_DATASOURCE_PASSWORD: ohgiraffers
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
