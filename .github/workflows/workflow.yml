@@ -32,16 +32,17 @@ jobs:
 
       - name: Create Dockerrun.aws.json
         run: |
-          echo '{
-             "AWSEBDockerrunVersion": "1",
-             "Image": {
-              "Name": "${{ secrets.DOCKER_USERNAME }}/springboot-api:latest",
-              "Update": "true"
-             },
-             "Ports": [
-               { "ContainerPort": 8080 }
-             ]
-          }' > Dockerrun.aws.json
+          echo "{
+            \"AWSEBDockerrunVersion\": \"1\",
+            \"Image\": {
+              \"Name\": \"${{ secrets.DOCKER_USERNAME }}/springboot-api:latest\",
+              \"Update\": \"true\"
+            },
+            \"Ports\": [
+              { \"ContainerPort\": \"8080\" }
+            ]
+          }" > Dockerrun.aws.json
+
 
       - name: Zip for deployment
         run : zip -r app.zip Dockerrun.aws.json
