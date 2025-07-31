@@ -1,6 +1,11 @@
 spring:
   application:
     name: springboot-restapi
+  datasource:
+    url: jdbc:mysql://mysql:3306/springreact
+    username: ohgiraffers
+    password: ohgiraffers
+    driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   port: 8080
   servlet:
