@@ -16,11 +16,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Restore application-dev.yml
-        run: echo "$APPLICATION_DEV_YML" | base64 -d > src/main/resources/application.yml
-        env:
-          APPLICATION_DEV_YML: ${{ secrets.APPLICATION_DEV_YML }}
-
       - name: Grant execute permission to gradlew
         run: chmod +x ./gradlew
 
