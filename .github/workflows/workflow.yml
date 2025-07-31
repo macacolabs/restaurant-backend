@@ -37,3 +37,37 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/springboot-api:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/springboot-api:latest
+
+      - name: Create Dockerrun.aws.json
+        run: |
+             echo '{
+                "AWSEBDockerrunVersion": 1,
+                "Image": {
+                 "Name": "${{ secrets.DOCKER_USERNAME }}/springboot-api:latest",
+                 "Update": "true"
+                },
+                "Ports": [
+                  { "ContainerPort": 8001 }
+                ]
+             }' > Dockerrun.aws.json
+      - name: Zip for deployment
+        run : zip -r app.zip Dockerrun.aws.json
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Upload to S3 and deploy to EB
+        run: |
+          aws s3 cp app.zip s3://${{ secrets.S3_BUCKET_NAME }}/app.zip
+  
+          aws elasticbeanstalk create-application-version \
+            --application-name ${{ secrets.EB_APP_NAME }} \
+            --version-label v${{ github.run_number }} \
+            --source-bundle S3Bucket=${{ secrets.S3_BUCKET_NAME }},S3Key=app.zip
+
+          aws elasticbeanstalk update-environment \
+            --environment-name ${{ secrets.EB_ENV_NAME }} \
+            --version-label v${{ github.run_number }}
+
+
