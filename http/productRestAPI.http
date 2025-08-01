@@ -76,7 +76,7 @@ Content-Disposition: form-data; name="productImage"; filename="pikachu.png"
 --WebAppBoundary--
 
 ###
-POST http://localhost:8080/auth/login
+POST http://app-springboot-env.eba-dc4q3pmx.ap-northeast-2.elasticbeanstalk.com/auth/login
 Content-Type: application/json
 Accept: */*
 Access-Control-Allow-Origin: *
