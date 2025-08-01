@@ -3,9 +3,9 @@ spring:
     name: springboot-restapi
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://sql.macacolabs.site:3300/springreact
-    username: ohgiraffers
-    password: ohgiraffers
+    url: ${{ secrets.DB_URL }}
+    username: ${{ secrets.DB_USERNAME }}
+    password: ${{ secrets.DB_PASSWORD }}
   # jpa config
   jpa:
     hibernate:
@@ -39,7 +39,7 @@ image:
   add-resource-handler: /productimgs/**
 
   image-dir: src/main/resources/static/productimgs
-  image-url: ${IMAGE_BASE_URL:http://localhost:8080}/productimgs/
+  image-url: ${{ secrets.IMAGE_URL }}
 jwt:
-  key: wERjtIdxQ8lNjF0w/AAiN6HqTASaCAUzSq6nbKefMwf5CbPE8GvwLsClz94uVt9Q1esxYwwXVU+BYn7/mR01Qg==
+  key: ${{ secrets.JWT_SECRET_KEY }}
   time: 1800000
